@@ -21,8 +21,23 @@ const zoomBtns = document.querySelectorAll(".zoom-btn");
 
 zoomBtns.forEach(btn => {
     btn.addEventListener("click", function () {
-        const img = this.parentElement.querySelector("img"); 
-        modalImg.src = img.src;
+        const img = this.parentElement.querySelector("img");
+        const vid = this.parentElement.querySelector("video");
+
+        const videoModal = document.getElementById("videoModal");
+
+        if (img) {
+            modalImg.src = img.src;
+            modalImg.style.display = "block";
+            videoModal.style.display = "none";
+        }
+
+        if (vid) {
+            videoModal.src = vid.src;
+            videoModal.style.display = "block";
+            modalImg.style.display = "none";
+        }
+
         modal.style.display = "flex";
     });
 });

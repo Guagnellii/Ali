@@ -84,9 +84,8 @@ section .galeria {
 }
 
 .modal {
-    display: none;
     position: fixed;
-    z-index: 100;
+    z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;
@@ -94,12 +93,17 @@ section .galeria {
     background-color: rgba(0,0,0,0.8);
     justify-content: center;
     align-items: center;
+    display: none;
 }
 
 .modal-contenido {
-    max-width: 80%;
-    max-height: 80%;
+    max-width: 90%;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
     border-radius: 15px;
+    object-fit: contain;
+    display: block;
 }
 
 .cerrar {
@@ -349,39 +353,28 @@ footer.visible-footer {
   }
 }
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    padding-top: 60px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.8);
+.mini-video {
+    width: 200px;
+    height: 200px;
+    border-radius: 15px;
+    object-fit: cover;
+    cursor: pointer;
+    background-color: black;
 }
 
-.modal-contenido {
+#imgModal,
+#videoModal {
+    max-width: 85%;
+    max-height: 75vh;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    border-radius: 15px;
     display: block;
-    margin: auto;
-    max-width: 90%;
-    border-radius: 12px;
 }
 
-.mini-video {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    cursor: pointer;
-    object-fit: cover;
-}
-
-.mini-video {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    object-fit: cover;
-    cursor: pointer;
-    background-color: black; 
+.modal {
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important;
 }
