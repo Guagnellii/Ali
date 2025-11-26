@@ -93,6 +93,10 @@
                 <button class="zoom-btn">🔍</button>
             </div>
             <div class="foto-item">
+                <video src="videos/teamo.mp4" preload="metadata" class="mini-video"></video>
+                <button class="zoom-btn">🔍</button>
+            </div>
+            <div class="foto-item">
                 <img src="fotos/date 2.jpg" alt="Date">
                 <button class="zoom-btn">🔍</button>
             </div>
@@ -117,6 +121,9 @@
 
     <section id="mensaje">
         <h2>Un mensaje para ti!!</h2>
+        <p class="fechita">
+        Te pedí que seas mi enamorada el <strong>16 de noviembre del 2025</strong> !!💘
+        </p>
         <p>¡¡Gracias por pertenecer en mi vida y ser parte de ella, cada día contigo es inolvidable y especial!!</p>
         <p id="contador"></p>
     </section>
@@ -127,7 +134,8 @@
 
     <div id="modal" class="modal">
         <span class="cerrar">&times;</span>
-        <img class="modal-contenido" id="imgModal" alt="Imagen ampliada">
+        <img id="imgModal" style="display:none;">
+        <video id="videoModal" controls style="display:none; max-width:90%; border-radius:12px;"></video>
     </div>
 
     <div class="music-player">
