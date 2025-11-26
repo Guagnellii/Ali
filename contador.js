@@ -15,16 +15,16 @@ setInterval(actualizarContador, 1000);
 
 const modal = document.getElementById("modal");
 const modalImg = document.getElementById("imgModal");
+const videoModal = document.getElementById("videoModal");
 const cerrar = document.querySelector(".cerrar"); 
 
 const zoomBtns = document.querySelectorAll(".zoom-btn");
 
 zoomBtns.forEach(btn => {
     btn.addEventListener("click", function () {
-        const img = this.parentElement.querySelector("img");
-        const vid = this.parentElement.querySelector("video");
-
-        const videoModal = document.getElementById("videoModal");
+        const item = this.closest(".foto-item");
+        const img = item.querySelector("img");
+        const vid = item.querySelector("video");
 
         if (img) {
             modalImg.src = img.src;
@@ -33,7 +33,10 @@ zoomBtns.forEach(btn => {
         }
 
         if (vid) {
+            vid.style.opacity = "0";
+            vid.style.pointerEvents = "none";
             videoModal.src = vid.src;
+            videoModal.load();
             videoModal.style.display = "block";
             modalImg.style.display = "none";
         }
@@ -44,11 +47,23 @@ zoomBtns.forEach(btn => {
 
 cerrar.addEventListener("click", () => {
     modal.style.display = "none";
+    videoModal.pause();
+    videoModal.currentTime = 0;
+    document.querySelectorAll(".mini-video, video").forEach(v => {
+        v.style.opacity = "1";
+        v.style.pointerEvents = "auto";
+    });
 });
 
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
         modal.style.display = "none";
+        videoModal.pause();
+        videoModal.currentTime = 0;
+        document.querySelectorAll(".mini-video, video").forEach(v => {
+            v.style.opacity = "1";
+            v.style.pointerEvents = "auto";
+        });
     }
 });
 

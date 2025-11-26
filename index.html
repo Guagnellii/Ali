@@ -93,7 +93,7 @@
                 <button class="zoom-btn">🔍</button>
             </div>
             <div class="foto-item">
-                <video src="videos/teamo.mp4" preload="metadata" class="mini-video"></video>
+                <video src="fotos/videos/teamo.mp4" preload="metadata" class="mini-video"></video>
                 <button class="zoom-btn">🔍</button>
             </div>
             <div class="foto-item">
@@ -133,9 +133,11 @@
     </footer>
 
     <div id="modal" class="modal">
-        <span class="cerrar">&times;</span>
-        <img id="imgModal" style="display:none;">
-        <video id="videoModal" controls style="display:none; max-width:90%; border-radius:12px;"></video>
+        <div class="modal-content">
+            <span class="cerrar">&times;</span>
+            <img id="imgModal" class="modal-media" style="display:none;">
+            <video id="videoModal" controls class="modal-media" style="display:none;"></video>
+        </div>
     </div>
 
     <div class="music-player">
@@ -156,6 +158,5 @@
 <div class="playlist"></div>
 <script src="contador.js"></script>
 
-<video src="videos/teamo.mp4" controls width="300"></video>
 </body>
 </html>
