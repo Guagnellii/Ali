@@ -47,19 +47,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         indexFrase = (indexFrase + 1) % frases.length;
 
-        // Crear burbuja flotante aleatoria tipo tarjeta blanca con bordes redondeados
         const burbuja = document.createElement("div");
         burbuja.textContent = frases[Math.floor(Math.random() * frases.length)];
         burbuja.classList.add("floating-message");
 
-        // Posición aleatoria
         burbuja.style.left = Math.random() * 80 + "%";
         burbuja.style.top = Math.random() * 70 + "%";
 
-        // Añadir al contenedor
         floatingContainer.appendChild(burbuja);
 
-        // Eliminar después de la animación
         setTimeout(() => {
             burbuja.remove();
         }, 4000);
