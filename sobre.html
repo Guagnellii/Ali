@@ -4,105 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestros mensajitos 💌</title>
+</head>
     <link rel="stylesheet" href="style.css">
-<style>
-.envelope-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #fff0f5;
-}
-
-.envelope-content {
-    text-align: center;
-}
-
-.envelope-heart {
-    width: 100px;
-    height: 100px;
-    cursor: pointer;
-}
-
-.love-message {
-    font-size: 20px;
-    color: #ff4f87;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-#floatingContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: visible;
-}
-
-.floating-message {
-    position: absolute;
-    font-size: 24px;
-    font-weight: bold;
-    animation: floatUp 4s ease-out forwards;
-}
-
-@keyframes floatUp {
-    0% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-150px); }
-}
-</style>
+    <style>
+    .envelope-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    </style>
 </head>
 <body>
-  <div class="envelope-page">
-      <audio id="paperSound" src="sounds/paper-open.mp3" preload="auto"></audio>
-      <div class="envelope-content">
-          <img src="fotos/icons/corazon5-removebg-preview.png" alt="Corazón" class="envelope-heart" id="heartButton">
-          <p id="loveMessage" class="love-message">
-              Haz clic en el corazón para abrir un mensajito!
-          </p>
-      </div>
-  </div>
-<!-- Elementos necesarios para las frases flotantes -->
-<div id="floatingContainer"></div>
-    <script src="contador.js"></script>
+    <div class="envelope-page">
+        <audio id="paperSound" src="sounds/paper-open.mp3" preload="auto"></audio>
+
+        <div class="envelope-content">
+            <img src="fotos/icons/corazon5-removebg-preview.png"
+                 alt="Corazón"
+                 class="envelope-heart"
+                 id="heartButton">
+
+            <p id="loveMessage" class="love-message">
+                Haz clic en el corazón para abrir un mensajito!
+            </p>
+        </div>
+    </div>
+
+    <div id="floatingContainer"></div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const heartBtn = document.getElementById('heartButton');
+    const msg = document.getElementById('loveMessage');
+    const paperSound = document.getElementById('paperSound');
+    const frases = [
+        "¡Te amo más de lo que te puedo explicar y demostrar!",
+        "Cada momento que paso contigo vale millones 💖",
+        "Eres mi lugar deseado y perfecto ✨",
+        "Gracias por hacerme feliz 🌹",
+        "Gracias por amarme 💕",
+        "Gracias por quererme 😍",
+        "Te amo corazón de melón 🍉",
+        "Tu haces que todo valga la pena 💫",
+        "Mi vida es mucho mejor contigo 💞",
+        "Eres mi mujer 💋",
+        "Vales todooo 💘",
+		"Eres mi sueño hecho realidad",
+		"Contigo hasta el fin del mundo!!",
+		"Eres mi persona favorita",
+		"Juntos somos invencibles",
+		"Eres mi alegría diaria",
+		"Mi amor por ti no tiene límites",
+		"Eres mi inspiración constante",
+		"Cada día te amo más",
+		"Eres mi todo y más",
+		"Siempre estás en mi corazón",
+		"Te llevo en mi corazón"
+    ];
+    let indexFrase = 0;
+    let firstClick = true;
+
+    heartBtn.addEventListener('click', () => {
+        if (paperSound) {
+            paperSound.currentTime = 0;
+            paperSound.play().catch(() => {});
+        }
+
+        // El mensaje debajo del corazón NO cambia
+
+        // Generar burbuja flotante con la MISMA frase que aparece debajo del corazón
+        const bubble = document.createElement("div");
+        bubble.classList.add("floating-message");
+        bubble.textContent = frases[Math.floor(Math.random() * frases.length)];
+
+        bubble.style.left = Math.random() * 80 + "%";
+        bubble.style.top = Math.random() * 70 + "%";
+        bubble.style.color = "#ff4f87";
+
+        document.getElementById("floatingContainer").appendChild(bubble);
+
+        setTimeout(() => bubble.remove(), 4000);
+    });
+});
+</script>
+</div>
+
+<div class="spotify-player minimized">
+    <button id="togglePlayer" class="player-btn">+</button>
+    <iframe style="border-radius:12px"
+        src="https://open.spotify.com/embed/playlist/2haUnAutmygaJTob0ZPHEn?utm_source=generator&theme=0&view=coverart"
+        width="100%" height="152" frameBorder="0" allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    </iframe>
+</div>
 
 <script>
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
+document.addEventListener("DOMContentLoaded", () => {
+    const player = document.querySelector('.spotify-player');
+    if (player) {
+        setTimeout(() => {
+            player.classList.add('visible');
+        }, 300);
+    }
+});
+
+const toggleButton = document.getElementById("togglePlayer");
+const spotifyPlayer = document.querySelector(".spotify-player");
+
+toggleButton.addEventListener("click", () => {
+    spotifyPlayer.classList.toggle("minimized");
+    toggleButton.textContent = spotifyPlayer.classList.contains("minimized") ? "+" : "-";
+});
 </script>
 </body>
 </html>
