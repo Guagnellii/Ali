@@ -51,13 +51,21 @@ section .galeria {
     position: relative;
 }
 
+.foto-item img,
+.foto-item video {
+    width: 200px !important;
+    height: 200px !important;
+    object-fit: cover !important;
+    border-radius: 15px !important;
+}
+
 .foto-container img {
     display: block;
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
+    width: 200px !important;
+    height: 200px !important;
+    object-fit: cover !important;
+    border-radius: 15px !important;
     transition: transform 0.3s;
-    border-radius: 15px;
 }
 
 .foto-item:hover img {
@@ -262,8 +270,8 @@ footer.visible-footer {
     position: absolute;
     top: 10px;
     right: 20px;
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -354,10 +362,10 @@ footer.visible-footer {
 }
 
 .mini-video {
-    width: 200px;
-    height: 200px;
-    border-radius: 15px;
-    object-fit: cover;
+    width: 200px !important;
+    height: 200px !important;
+    object-fit: cover !important;
+    border-radius: 15px !important;
     cursor: pointer;
     background-color: black;
 }
@@ -377,4 +385,212 @@ footer.visible-footer {
     justify-content: center !important;
     align-items: center !important;
     padding: 0 !important;
+}
+
+/* Cada item ocupa 1/3 del ancho visible menos gaps */
+.foto-item {
+    flex: 0 0 180px;
+    box-sizing: border-box;
+    scroll-snap-align: center;
+}
+
+.foto-item img,
+.foto-item video {
+    width: 180px !important;
+    height: 180px !important;
+    object-fit: cover !important;
+    border-radius: 15px !important;
+    display: block;
+}
+
+/* Botones laterales con blur tipo Canva */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: none;
+    font-size: 22px;
+    padding: 12px 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 20;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transition: background 0.2s ease, transform 0.12s ease;
+}
+.carousel-btn:hover { background: rgba(255,255,255,0.36); transform: translateY(-50%) scale(1.03); }
+.left-btn { left: 8px; }
+.right-btn { right: 8px; }
+
+/* Fade en el borde derecho (opcional) */
+.carousel-fade {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 110px;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(to right, rgba(0,0,0,0), rgba(228,219,197,1));
+}
+
+/* Asegurar que containers pequeños no rompan layout */
+@media (max-width: 900px) {
+    .foto-item { flex: 0 0 calc((100% - 20px) / 2); }
+    .carousel-fade { display: none; }
+}
+
+@media (max-width: 520px) {
+    .foto-item { flex: 0 0 calc(100% - 20px); }
+    .carousel-btn { display: none; }
+}
+
+/* --- CARRUSEL NUEVO: versiones más pequeñas, centradas y con efecto blur --- */
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 580px; /* Ancho exacto para 3 fotos */
+    margin: 40px auto; /* Espacio vertical */
+    overflow: visible; /* ¡IMPORTANTE! Esto deja ver los botones afuera */
+    z-index: 1;
+}
+
+.carousel-mask {
+    width: 100%;
+    overflow: hidden; /* Aquí cortamos las imágenes */
+    border-radius: 20px; /* Bordes redondeados para el bloque de fotos */
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 12px;
+    transition: transform 0.4s ease-in-out;
+    width: max-content;
+}
+
+.foto-item {
+    flex: 0 0 180px;
+    min-width: 180px;
+    height: 180px;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.foto-item img,
+.foto-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.zoom-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(51, 51, 51, 0.9);
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.foto-item:hover .zoom-btn {
+    opacity: 1;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Completamente redondos */
+    background-color: #86895d; /* Tu color verde */
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Sombra para que resalten */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s, background 0.3s;
+}
+
+.carousel-btn:hover {
+    background-color: #ff3399; /* Tu color rosa al pasar el mouse */
+    transform: translateY(-50%) scale(1.1); /* Efecto pop */
+}
+
+.left-btn {
+    left: -70px; /* Lo empujamos hacia la izquierda afuera */
+}
+
+.right-btn {
+    right: -70px; /* Lo empujamos hacia la derecha afuera */
+}
+
+.carousel-fade {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(228,219,197,0), rgba(228,219,197,1));
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .carousel-container {
+        max-width: 90%; /* Ocupa más espacio en celular */
+    }
+    .left-btn { left: -20px; }
+    .right-btn { right: -20px; }
+}
+
+/* Creamos dos capas invisibles a los lados */
+.carousel-mask::before,
+.carousel-mask::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 50px; /* Qué tan largo es el difuminado */
+    height: 100%;
+    z-index: 5; /* Por encima de las fotos */
+    pointer-events: none; /* ¡Importante! Deja dar clic a las fotos a través del fade */
+}
+
+/* Fade Izquierdo */
+.carousel-mask::before {
+    left: 0;
+    background: linear-gradient(to right, #E4DBC5, transparent);
+}
+
+/* Fade Derecho */
+.carousel-mask::after {
+    right: 0;
+    background: linear-gradient(to left, #E4DBC5, transparent);
+}
+
+/* 2. Clase para el efecto de ocultarse al subir (Scroll Fade) */
+.scroll-fade {
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    opacity: 1;
+}
+
+/* Optimización para el Fade de Scroll */
+.carousel-container, h2 {
+    /* Le avisa al navegador que esto va a cambiar mucho, para que use la GPU */
+    will-change: opacity, transform; 
+    /* Importante: NO poner transition en opacity aquí, para que responda instantáneo al dedo */
 }

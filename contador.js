@@ -182,3 +182,36 @@ toggleButton.addEventListener(`click`, () => {
     spotifyPlayer.classList.toggle(`minimized`);
     toggleButton.textContent = spotifyPlayer.classList.contains(`minimized`) ? `+` : `-`;
 });
+
+/* --- Efecto Fade: Solo se borra al tocar el borde superior --- */
+window.addEventListener("scroll", () => {
+    const elementos = document.querySelectorAll(".carousel-container, h2");
+
+    elementos.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        
+        // CONFIGURACIÓN NUEVA:
+        // startFade = 200: Empieza a desvanecerse solo cuando está muy cerca (200px) del tope.
+        // Antes estaba en la mitad de la pantalla, por eso se veía mal.
+        const startFade = 200; 
+        
+        // endFade = -100: Termina de borrarse cuando ya subió un poco fuera de la pantalla.
+        const endFade = -100; 
+
+        if (rect.top > startFade) {
+            // Si está más abajo de la zona de peligro, se ve FULL HD
+            el.style.opacity = 1;
+            el.style.transform = "translateY(0)";
+        } else {
+            // Si entra en la zona superior, calculamos el fade suave
+            let nuevaOpacidad = (rect.top - endFade) / (startFade - endFade);
+
+            // Límites para que no se rompa
+            if (nuevaOpacidad < 0) nuevaOpacidad = 0;
+            if (nuevaOpacidad > 1) nuevaOpacidad = 1;
+
+            el.style.opacity = nuevaOpacidad;
+            el.style.transform = `translateY(${(1 - nuevaOpacidad) * -20}px)`;
+        }
+    });
+});
